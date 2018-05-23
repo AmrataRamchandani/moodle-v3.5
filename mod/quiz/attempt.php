@@ -42,6 +42,13 @@ $page = optional_param('page', 0, PARAM_INT);
 $cmid = optional_param('cmid', null, PARAM_INT);
 
 $attemptobj = quiz_create_attempt_handling_errors($attemptid, $cmid);
+
+// Check for clear button option and insert corresponding JS.
+if($attemptobj->get_quiz()->enableclear) {
+    	$PAGE->requires->jquery();
+    	$PAGE->requires->js( '/mod/quiz/clearbutton.js');
+}
+    
 $page = $attemptobj->force_page_number_into_range($page);
 $PAGE->set_url($attemptobj->attempt_url(null, $page));
 
