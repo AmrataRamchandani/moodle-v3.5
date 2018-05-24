@@ -1,24 +1,21 @@
 jQuery(function($) {
 
     if ($("input[type]").is(":radio")) {
-        $(".answer").append("<button type='button' name='clear' >Clear</button>");
+        $(".answer").append("<button type='button' name='clear' style='display:none'>Clear</button>");
     }
-
-    if ($("input[type=radio]:checked").length > 0) {
-    	$('button[name=clear]').show();
-    }
-    else{
-    	$('button[name=clear]').hide();
-    	}
+    
+    $("input[type='radio']:checked").each(function(e){
+        $(this).closest('.answer').find("button").show();
+    });
     
 
     $("input[type=radio]").on('click', function() {
-        $('button[name=clear]').show();
+    	$(this).closest('.answer').find('button[name=clear]').show();
     });
 
     $('button[name=clear]').on('click', function() {
         $(this).closest('.answer').find(':radio').prop('checked', false);
-        $('button[name=clear]').hide();
+        $(this).closest('.answer').find('button[name=clear]').hide();
     });
 
     if ($('.content').parent().hasClass("deferredfeedback")) {
@@ -26,3 +23,9 @@ jQuery(function($) {
             $("button[name=clear]").remove();
         }
     } else {
+    	if (!($('div.im-controls').length)) {
+            $("button[name=clear]").remove();
+        }
+    }
+
+});
